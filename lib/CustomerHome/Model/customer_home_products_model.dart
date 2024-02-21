@@ -1,26 +1,30 @@
-class ProductDetailModel {
+class ProductsModel {
   bool? success;
-  Product? product;
+  List<Products>? products;
 
-  ProductDetailModel({this.success, this.product});
+  ProductsModel({this.success, this.products});
 
-  ProductDetailModel.fromJson(Map<String, dynamic> json) {
+  ProductsModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    product =
-    json['product'] != null ? new Product.fromJson(json['product']) : null;
+    if (json['products'] != null) {
+      products = <Products>[];
+      json['products'].forEach((v) {
+        products!.add(new Products.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
-    if (this.product != null) {
-      data['product'] = this.product!.toJson();
+    if (this.products != null) {
+      data['products'] = this.products!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Product {
+class Products {
   String? sId;
   String? productName;
   String? brandName;
@@ -28,12 +32,12 @@ class Product {
   int? price;
   String? details;
   List<String>? imagesArray;
-  List<String>? sizeArray;
+  List<double>? sizeArray;
   String? shoeColor;
   String? shoeSizeText;
-  bool? isSelected;
+  int? iV;
 
-  Product(
+  Products(
       {this.sId,
         this.productName,
         this.brandName,
@@ -44,9 +48,9 @@ class Product {
         this.sizeArray,
         this.shoeColor,
         this.shoeSizeText,
-        this.isSelected});
+        this.iV});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  Products.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     productName = json['productName'];
     brandName = json['brandName'];
@@ -54,9 +58,10 @@ class Product {
     price = json['price'];
     details = json['details'];
     imagesArray = json['imagesArray'].cast<String>();
-    sizeArray = json['sizeArray'].cast<String>();
+    sizeArray = json['sizeArray'].cast<double>();
     shoeColor = json['shoeColor'];
     shoeSizeText = json['shoeSizeText'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
@@ -71,6 +76,7 @@ class Product {
     data['sizeArray'] = this.sizeArray;
     data['shoeColor'] = this.shoeColor;
     data['shoeSizeText'] = this.shoeSizeText;
+    data['__v'] = this.iV;
     return data;
   }
 }

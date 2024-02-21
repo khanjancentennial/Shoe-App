@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:group1_mapd726_shoe_app/Registration/Provider/registration_provider.dart';
-import 'package:group1_mapd726_shoe_app/Registration/RegistrationScreen.dart';
 import 'package:group1_mapd726_shoe_app/utils/app_color.dart';
 import 'package:provider/provider.dart';
 
+import 'CustomerHome/Provider/customer_home_provider.dart';
+import 'CustomerProductDetail/Provider/product_detail_provider.dart';
 import 'CustomerProfile/Provider/update_profile_provider.dart';
 import 'CustomerProfile/Provider/user_profile_provider.dart';
 import 'Login/Provider/LoginProvider.dart';
@@ -44,6 +45,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<RegistrationProvider>(create: (context) => RegistrationProvider()),
         ChangeNotifierProvider<UserProfileProvider>(create: (context) => UserProfileProvider()),
         ChangeNotifierProvider<UpdateProfileProvider>(create: (context) => UpdateProfileProvider()),
+        ChangeNotifierProvider<ProductsProvider>(create: (context) => ProductsProvider()),
+        ChangeNotifierProvider<ProductDetailProvider>(create: (context) => ProductDetailProvider()),
 
       ],
       child: MaterialApp(

@@ -6,10 +6,13 @@ import 'package:group1_mapd726_shoe_app/Widgets/button_with_text.dart';
 import 'package:group1_mapd726_shoe_app/utils/app_color.dart';
 import 'package:group1_mapd726_shoe_app/utils/app_images.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:provider/provider.dart';
 
+import '../CustomerProductDetail/customer_product_detail_screen.dart';
 import '../Login/LoginScreen.dart';
 import '../utils/app_utils.dart';
 import '../utils/preference_key.dart';
+import 'Provider/customer_home_provider.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   String? firstName;
@@ -24,10 +27,26 @@ class CustomerHomeScreen extends StatefulWidget {
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 List<BrandNames> brands = [
   BrandNames("Nike", true,AppImage.shoe1),
-  BrandNames("Adidas", false,AppImage.shoe1),
+  BrandNames("Addidas", false,AppImage.shoe1),
   BrandNames("Puma", false,AppImage.shoe1)
 
 ];
+
+
+@override
+void initState() {
+  // TODO: implement initState
+  super.initState();
+  WidgetsBinding.instance!.addPostFrameCallback((timeStamp) => getDetails());
+}
+
+Future<void>? getDetails() async {
+  if (this.mounted) {
+    setState(() {});
+    Provider.of<ProductsProvider>(context,listen: false).getProductsByCategory("Nike");
+
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +84,7 @@ List<BrandNames> brands = [
                         AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefFirstName,"");
                         AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefLastName,"");
                         AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserType,"");
+                        AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserId,"");
 
                         // Navigator.pop(context);
 
@@ -109,6 +129,7 @@ List<BrandNames> brands = [
                                 brands[i].isSelected = false;
                               }
                               brands[index].isSelected = true;
+                              Provider.of<ProductsProvider>(context,listen: false).getProductsByCategory(brands[index].brandName);
                             });
 
                           },
@@ -135,49 +156,88 @@ List<BrandNames> brands = [
                 ),
                 const SizedBox(height: 10),
 
-                GridView.builder(
-                  itemCount: brands.length,
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      // crossAxisCount: 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 30,
-                      childAspectRatio: 0.58,
-                      crossAxisCount: MediaQuery.of(context).size.width >= 600? 4: 2,
+          Consumer<ProductsProvider>(
+              builder: (_, allProducts, child) =>
+                allProducts.isLoading ?
 
-                    ),
-                    itemBuilder: (context,index){
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.textFieldColor,
-                              borderRadius: BorderRadius.circular(20)
+                    Container(child: Center(
+                      child: CircularProgressIndicator(),
+                    ),)
+                    :
+
+                    allProducts.productsModel!.products!.isEmpty ||  allProducts.productsModel!.products == []?
+
+                    const Center(child: Text("No Products Available"))
+                        :
+                    GridView.builder(
+                        itemCount: allProducts.productsModel!.products!.length,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          // crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 30,
+                          childAspectRatio: 0.58,
+                          crossAxisCount: MediaQuery.of(context).size.width >= 600? 4: 2,
+
+                        ),
+                        itemBuilder: (context,index){
+                          return InkWell(
+                            onTap: (){
+
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: CustomerProductDetailScreen(id: allProducts.productsModel!.products![index].sId),
+                                withNavBar: false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                              );
+
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3), // changes position of shadow
+                                        ),
+                                      ],
+                                      // color: AppColors.textFieldColor,
+                                      borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          allProducts.productsModel!.products![index].imagesArray![0],
+                                      ),
+                                      fit: BoxFit.fill
+                                    )
+                                  ),
+                                  height: 180,
+                                ),
+                                const SizedBox(height: 15),
+                                Text(allProducts.productsModel!.products![index].productName!,
+                                  style: AppUtils.instance.textStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400
+                                  ),
+                                  maxLines: 2,
+                                ),
+                                const SizedBox(height: 5),
+                                Text("\$ ${allProducts.productsModel!.products![index].price}",
+                                  style: AppUtils.instance.textStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
                             ),
-                            height: 180,
-                            child: Image.asset(brands[index].image),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(brands[index].brandName,
-                            style: AppUtils.instance.textStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w300
-                            ),
-                            maxLines: 2,
-                          ),
-                          const SizedBox(height: 5),
-                          Text("\$ 200",
-                          style: AppUtils.instance.textStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold
-                          ),
-                          ),
-                        ],
-                      );
-                    }
-                    ),
+                          );
+                        }
+                    )
+          ),
                 const Padding(padding: EdgeInsets.only(bottom: 50)
                 )
 

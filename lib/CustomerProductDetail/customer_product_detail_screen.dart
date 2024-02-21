@@ -20,6 +20,9 @@ class CustomerProductDetailScreen extends StatefulWidget {
 
 class _CustomerProductDetailScreenState extends State<CustomerProductDetailScreen> {
 
+  bool isSelected = false;
+  String sizeToCheck = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -212,6 +215,7 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
                       padding: const EdgeInsets.only(left: 20,right: 20),
                       child: Container(
                         height: 50,
+                        width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           itemCount: productDetail.productDetailModel!.product!.sizeArray!.length,
                           physics: ScrollPhysics(),
@@ -219,18 +223,37 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context,index) =>
                             Wrap(
-                              children:[
-                                Chip(
-                                  backgroundColor: AppColors.homeScreenColor,
-                                  label: Text(productDetail.productDetailModel!.product!.sizeArray![index].toString(),
-                                      style: AppUtils.instance.textStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                spacing: 20.0, // Horizontal space.
+                                runSpacing: 30.0,
+                                children:[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5,right: 5),
+                                  child: InkWell(
+                                    onTap: (){
+                                      sizeToCheck = "${productDetail.productDetailModel!.product!.sizeArray![index]}";
+                                      if (isSizeSelected(sizeToCheck)) {
+                                        print("$sizeToCheck is selected.");
+                                        isSelected = true;
+                                        setState(() {});
+                                      } else {
+                                        print("$sizeToCheck is not selected.");
+                                        isSelected = false;
+                                        setState(() {});
+                                      }
+                                    },
+                                    child: Chip(
+                                      backgroundColor: isSelected && sizeToCheck == productDetail.productDetailModel!.product!.sizeArray![index]? AppColors.buttonColor:AppColors.homeScreenColor,
+                                      label: Text(productDetail.productDetailModel!.product!.sizeArray![index].toString(),
+                                          style: AppUtils.instance.textStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+
                                       ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
 
+                                    ),
                                   ),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-
                                 ),
                               ]
 
@@ -419,5 +442,8 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
 
 
 
+  }
+  bool isSizeSelected(String size) {
+    return Provider.of<ProductDetailProvider>(context,listen: false).productDetailModel!.product!.sizeArray!.contains(size);
   }
 }
