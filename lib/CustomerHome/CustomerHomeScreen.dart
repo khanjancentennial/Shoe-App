@@ -27,7 +27,7 @@ class CustomerHomeScreen extends StatefulWidget {
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 List<BrandNames> brands = [
   BrandNames("Nike", true,AppImage.shoe1),
-  BrandNames("Addidas", false,AppImage.shoe1),
+  BrandNames("Adidas", false,AppImage.shoe1),
   BrandNames("Puma", false,AppImage.shoe1)
 
 ];
@@ -177,7 +177,7 @@ Future<void>? getDetails() async {
                           // crossAxisCount: 2,
                           crossAxisSpacing: 20,
                           mainAxisSpacing: 30,
-                          childAspectRatio: 0.58,
+                          childAspectRatio: 0.56,
                           crossAxisCount: MediaQuery.of(context).size.width >= 600? 4: 2,
 
                         ),
@@ -226,7 +226,7 @@ Future<void>? getDetails() async {
                                   maxLines: 2,
                                 ),
                                 const SizedBox(height: 5),
-                                Text("\$ ${allProducts.productsModel!.products![index].price}",
+                                Text("\$ ${allProducts.productsModel!.products![index].price!}",
                                   style: AppUtils.instance.textStyle(
                                       fontSize: 26,
                                       fontWeight: FontWeight.bold

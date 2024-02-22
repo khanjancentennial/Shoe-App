@@ -29,7 +29,7 @@ class Products {
   String? productName;
   String? brandName;
   String? shoeType;
-  int? price;
+  double? price;
   String? details;
   List<String>? imagesArray;
   List<double>? sizeArray;
@@ -55,7 +55,7 @@ class Products {
     productName = json['productName'];
     brandName = json['brandName'];
     shoeType = json['shoeType'];
-    price = json['price'];
+    price = json['price'].toDouble();
     details = json['details'];
     imagesArray = json['imagesArray'].cast<String>();
     sizeArray = json['sizeArray'].cast<double>();
