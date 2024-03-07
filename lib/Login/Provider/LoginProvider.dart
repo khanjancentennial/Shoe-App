@@ -37,12 +37,20 @@ class LoginProvider extends ChangeNotifier {
 
             if(loginData!.success == true){
               if(loginData!.user!.userType == "Customer"){
+
+                AppUtils.instance.addPref(PreferenceKey.boolKey, PreferenceKey.prefLogin,false);
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefFirstName,"");
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefLastName,"");
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserType,"");
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserId,"");
+
+
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(
                         builder: (context) =>
 
                             BottomNavigation(firstName: loginData!.user!.firstName,
-                                lastName: loginData!.user!.lastName)
+                                lastName: loginData!.user!.lastName,initialIndex: 0,)
 
                             // CustomerHomeScreen(firstName: loginData!.user!.firstName,
                             // lastName: loginData!.user!.lastName)
@@ -55,6 +63,13 @@ class LoginProvider extends ChangeNotifier {
                 AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserType,loginData!.user!.userType);
                 AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserId,loginData!.user!.sId);
               }else{
+                AppUtils.instance.addPref(PreferenceKey.boolKey, PreferenceKey.prefLogin,false);
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefFirstName,"");
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefLastName,"");
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserType,"");
+                AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserId,"");
+
+
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(
                         builder: (context) =>

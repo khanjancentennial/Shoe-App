@@ -10,6 +10,11 @@ class PreferenceKey {
 
   static const String prefPhoneNumber = 'PREF_PHONE_NUMBER';
 
+  static const String prefProductName = 'PREF_PRODUCT_NAME';
+  static const String prefProductImage = 'PREF_PRODUCT_IMAGE';
+  static const String prefPrice = 'PREF_PRICE';
+  static const String prefQty = 'PREF_QTY';
+
   // preference type key
   static const String stringKey="String";
   static const String boolKey="Bool";

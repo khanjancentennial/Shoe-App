@@ -6,6 +6,7 @@ import 'package:group1_mapd726_shoe_app/Registration/Provider/registration_provi
 import 'package:group1_mapd726_shoe_app/utils/app_color.dart';
 import 'package:provider/provider.dart';
 
+import 'AdminProductDetail/Provider/product_detail_provider.dart';
 import 'CustomerHome/Provider/customer_home_provider.dart';
 import 'CustomerProductDetail/Provider/product_detail_provider.dart';
 import 'CustomerProfile/Provider/update_profile_provider.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UpdateProfileProvider>(create: (context) => UpdateProfileProvider()),
         ChangeNotifierProvider<ProductsProvider>(create: (context) => ProductsProvider()),
         ChangeNotifierProvider<ProductDetailProvider>(create: (context) => ProductDetailProvider()),
+        ChangeNotifierProvider<AdminProductDetailProvider>(create: (context) => AdminProductDetailProvider()),
 
       ],
       child: MaterialApp(

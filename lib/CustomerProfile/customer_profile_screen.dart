@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:group1_mapd726_shoe_app/CustomerProfile/Model/update_profile_model.dart';
 import 'package:group1_mapd726_shoe_app/CustomerProfile/Provider/update_profile_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../Login/LoginScreen.dart';
 import '../Registration/Provider/registration_provider.dart';
 import '../Widgets/button_with_progress_idicator.dart';
 import '../Widgets/button_with_text.dart';
@@ -52,6 +50,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
   Future<void>? getDetails() async {
     if (this.mounted) {
       userId = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefUserId);
+      print(userId);
       setState(() {});
       Provider.of<UserProfileProvider>(context, listen: false).getUserDetails(userId);
     }

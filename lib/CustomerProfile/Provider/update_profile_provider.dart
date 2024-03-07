@@ -57,7 +57,7 @@ class UpdateProfileProvider extends ChangeNotifier {
           if(userType == "Customer"){
             PersistentNavBarNavigator.pushNewScreen(
               context,
-              screen: BottomNavigation(firstName: firstName, lastName: lastName),
+              screen: BottomNavigation(firstName: firstName, lastName: lastName,initialIndex: 0,),
               withNavBar: false, // OPTIONAL VALUE. True by default.
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
             );

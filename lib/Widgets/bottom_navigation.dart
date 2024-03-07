@@ -12,20 +12,28 @@ import '../utils/app_color.dart';
 class BottomNavigation extends StatelessWidget {
   String? firstName;
   String? lastName;
-  BottomNavigation({this.firstName,this.lastName});
+  int? initialIndex;
+  String? productName;
+  String? image;
+  int? qty;
+  double? price;
+  BottomNavigation({this.firstName,this.lastName,this.initialIndex,this.productName,this.image,this.qty,this.price});
 
   @override
   Widget build(BuildContext context) {
 
     PersistentTabController _controller;
-    _controller = PersistentTabController(initialIndex: 0);
+    _controller = PersistentTabController(initialIndex: initialIndex!);
 
     List<Widget> _buildScreens() {
       return [
         CustomerHomeScreen(firstName: firstName,lastName: lastName),
         CustomerSearchPage(),
         CustomerOrderHistory(),
-        CustomerCartScreen(),
+        CustomerCartScreen(productName: productName,
+          price: price,
+          qty: qty,
+          image: image),
         CustomerProfileScreen()
       ];
     }

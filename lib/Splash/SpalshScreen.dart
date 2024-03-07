@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => BottomNavigation(firstName: firstName,lastName: lastName)
+                builder: (context) => BottomNavigation(firstName: firstName,lastName: lastName,initialIndex: 0,)
 
                     // CustomerHomeScreen(firstName: firstName,lastName: lastName)
             ),

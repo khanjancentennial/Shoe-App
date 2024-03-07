@@ -57,6 +57,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefLastName,"");
                           AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserType,"");
                           AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserId,"");
+                          setState(() {});
 
                           // Navigator.pop(context);
 

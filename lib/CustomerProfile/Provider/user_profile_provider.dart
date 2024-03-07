@@ -31,6 +31,13 @@ class UserProfileProvider extends ChangeNotifier {
     startLoading();
 
     try {
+      firstNameController.text =  "";
+      lastNameController.text =  "";
+      emailController.text =  "";
+      phoneController.text =  "";
+      address.text =  "";
+      isMale = false;
+      isFemale = false;
       http.Response response =
       await http.get(Uri.parse("${ApiNetwork.USER_URL}/$userId"));
       print(response);

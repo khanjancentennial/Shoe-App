@@ -14,7 +14,7 @@ class _AdminOrderManageScreenState extends State<AdminOrderManageScreen> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: const Center(
-        child: Text("Cart Screen"),
+        child: Text("Admin Order Manage Screen"),
       ),
     );
   }

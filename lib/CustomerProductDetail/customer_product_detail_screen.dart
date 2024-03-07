@@ -2,17 +2,23 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:group1_mapd726_shoe_app/CustomerCart/customer_cart_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
+import '../Widgets/bottom_navigation.dart';
 import '../utils/app_color.dart';
 import '../utils/app_utils.dart';
+import '../utils/preference_key.dart';
 import 'Provider/product_detail_provider.dart';
 
 class CustomerProductDetailScreen extends StatefulWidget {
 
   String? id;
+  String? firstName;
+  String? lastName;
 
-  CustomerProductDetailScreen({super.key, this.id});
+  CustomerProductDetailScreen({super.key, this.id,this.firstName,this.lastName});
 
   @override
   State<CustomerProductDetailScreen> createState() => _CustomerProductDetailScreenState();
@@ -391,28 +397,52 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
                           ),
 
                           Spacer(),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColors.buttonColor,
+                          InkWell(
+                            onTap: (){
 
-                            ),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width/2.5,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.shopping_bag_outlined,size: 28),
-                                const SizedBox(width: 20),
-                                Text("\$${productDetail.productDetailModel!.product!.price}",
-                                    style: AppUtils.instance.textStyle(
-                                        fontSize: 24,
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.bold
+                              AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductName,productDetail.productDetailModel!.product!.productName);
+                              AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductImage,productDetail.productDetailModel!.product!.imagesArray![0]);
+                              AppUtils.instance.addPref(PreferenceKey.intKey, PreferenceKey.prefQty,productDetail.items);
+                              AppUtils.instance.addPref(PreferenceKey.doubleKey, PreferenceKey.prefPrice,productDetail.productDetailModel!.product!.price);
 
-                                    )
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BottomNavigation(firstName: widget.firstName,
+                                      lastName: widget.lastName,initialIndex: 3,
+                                      productName: productDetail.productDetailModel!.product!.productName,
+                                      price: productDetail.productDetailModel!.product!.price,
+                                      qty: productDetail.items,
+                                      image: productDetail.productDetailModel!.product!.imagesArray![0],)
+
+                                  // CustomerHomeScreen(firstName: firstName,lastName: lastName)
                                 ),
-                              ],
+                              );
+
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.buttonColor,
+
+                              ),
+                              height: 50,
+                              width: MediaQuery.of(context).size.width/2.5,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.shopping_bag_outlined,size: 28),
+                                  const SizedBox(width: 20),
+                                  Text("\$${productDetail.productDetailModel!.product!.price}",
+                                      style: AppUtils.instance.textStyle(
+                                          fontSize: 24,
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.bold
+
+                                      )
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
 

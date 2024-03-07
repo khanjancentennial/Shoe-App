@@ -86,6 +86,8 @@ Future<void>? getDetails() async {
                         AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserType,"");
                         AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefUserId,"");
 
+                        setState(() {});
+
                         // Navigator.pop(context);
 
                         PersistentNavBarNavigator.pushNewScreen(
@@ -187,7 +189,7 @@ Future<void>? getDetails() async {
 
                               PersistentNavBarNavigator.pushNewScreen(
                                 context,
-                                screen: CustomerProductDetailScreen(id: allProducts.productsModel!.products![index].sId),
+                                screen: CustomerProductDetailScreen(id: allProducts.productsModel!.products![index].sId,firstName: widget.firstName,lastName: widget.lastName,),
                                 withNavBar: false, // OPTIONAL VALUE. True by default.
                                 pageTransitionAnimation: PageTransitionAnimation.cupertino,
                               );
