@@ -2,85 +2,80 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:group1_mapd726_shoe_app/CustomerHome/CustomerHomeScreen.dart';
 import 'package:group1_mapd726_shoe_app/Widgets/admin_bottom_navigation.dart';
 import 'package:http/http.dart' as http;
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'dart:async';
 
-import '../../Login/LoginScreen.dart';
 import '../../Widgets/bottom_navigation.dart';
 import '../../utils/api_network.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/exceptions.dart';
-import '../Model/update_profile_model.dart';
+import '../Model/admin_edit_product_model.dart';
 
-class UpdateProfileProvider extends ChangeNotifier {
-  late UpdateProfileModel updateProfileModel;
+class AdminEditProductProvider extends ChangeNotifier {
+  late AdminEditProductModel adminEditProductModel;
   bool isLoading=false;
   bool isFemale = false;
   bool isMale = false;
 
-  Future<UpdateProfileModel?> addUserDetails(
+  Future<AdminEditProductModel?> editProduct(
       BuildContext context,
-      String userId,
+      String productName,
+      String brandName,
+      String shoeType,
+      String price,
+      String details,
+      String sizeArray,
+      String shoeSizeText,
+      String shoeColor,
+      String productId,
       String firstName,
-      String lastName,
-      String emailId,
-      String address,
-      String phoneNumber,
-      String gender,
-      String userType
+      String lastName
       ) async {
 
     startLoading();
     Map<String, dynamic> updateUserBody = {
-      "_id" : userId,
-      "firstName": firstName,
-      "lastName": lastName,
-      "email": emailId,
-      "gender":gender,
-      "phoneNumber": phoneNumber,
-      "address": address,
-      "userType": userType,
+      "productName" : productName,
+      "brandName" : brandName,
+      "shoeType": shoeType,
+      "price" : price,
+      "details" : details,
+      "sizeArray" : sizeArray,
+      "shoeSizeText" : shoeSizeText,
+      "shoeColor" : shoeColor
     };
     try {
       http.Response response =
-      await http.put(Uri.parse("${ApiNetwork.USER_URL}/${userId}"),
-          body: updateUserBody);
+      await http.put(Uri.parse("${ApiNetwork.ADD_PRODUCT}/$productId"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(updateUserBody));
       print(response);
       if (response.statusCode == 200) {
-        updateProfileModel = UpdateProfileModel.fromJson(json.decode(response.body));
+        adminEditProductModel = AdminEditProductModel.fromJson(json.decode(response.body));
 
-        if(updateProfileModel.success== true){
-          if(userType == "Customer"){
-            PersistentNavBarNavigator.pushNewScreen(
-              context,
-              screen: BottomNavigation(firstName: firstName, lastName: lastName,initialIndex: 0,),
-              withNavBar: false, // OPTIONAL VALUE. True by default.
-              pageTransitionAnimation: PageTransitionAnimation.cupertino,
-            );
-          }else{
-            PersistentNavBarNavigator.pushNewScreen(
-              context,
-              screen: AdminBottomNavigation(firstName: firstName, lastName: lastName,index: 0),
-              withNavBar: false, // OPTIONAL VALUE. True by default.
-              pageTransitionAnimation: PageTransitionAnimation.cupertino,
-            );
-          }
+        if(adminEditProductModel.success== true){
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => AdminBottomNavigation(
+              firstName: firstName,lastName: lastName,index: 0,)),
+          );
 
           AppUtils.instance.showToast(
               textColor: Colors.white,
               backgroundColor: AppColors.green,
-              toastMessage: updateProfileModel.message);
+              toastMessage: adminEditProductModel.message);
           stopLoading();
           notifyListeners();
         }else{
           AppUtils.instance.showToast(
               textColor: Colors.white,
               backgroundColor: AppColors.red,
-              toastMessage: updateProfileModel.message);
+              toastMessage: adminEditProductModel.message);
           stopLoading();
           notifyListeners();
         }
@@ -90,9 +85,9 @@ class UpdateProfileProvider extends ChangeNotifier {
         AppUtils.instance.showToast(
             textColor: Colors.white,
             backgroundColor: AppColors.red,
-            toastMessage: updateProfileModel.message);
+            toastMessage: adminEditProductModel.message);
         notifyListeners();
-        updateProfileModel = UpdateProfileModel.fromJson(json.decode(response.body));
+        adminEditProductModel = AdminEditProductModel.fromJson(json.decode(response.body));
 
       }
       notifyListeners();
@@ -116,7 +111,7 @@ class UpdateProfileProvider extends ChangeNotifier {
 
     }
     notifyListeners();
-    return updateProfileModel;
+    return adminEditProductModel;
   }
 
   void startLoading(){

@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String finalEmail = convertIntoString.replaceAll(" ", "");
 
     if(_formKey.currentState!.validate()){
-      Provider.of<LoginProvider>(context,listen: false).loginUser(context,finalEmail, passwordController.text);
+      Provider.of<LoginProvider>(context,listen: false).loginUser(context,finalEmail.toString(), passwordController.text.toString());
 
     }
     //   else{}

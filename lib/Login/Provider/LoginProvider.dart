@@ -30,8 +30,14 @@ class LoginProvider extends ChangeNotifier {
       "password": getPassword
     };
     try {
+      print(loginDataBody);
           http.Response response =
-          await http.post(Uri.parse(ApiNetwork.LOGIN_URL), body: loginDataBody);
+          await http.post(Uri.parse(ApiNetwork.LOGIN_URL),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: jsonEncode(loginDataBody));
+          print(response.body);
           if (response.statusCode == 200) {
             loginData = LoginModel.fromJson(json.decode(response.body));
 
@@ -49,7 +55,8 @@ class LoginProvider extends ChangeNotifier {
                     MaterialPageRoute(
                         builder: (context) =>
 
-                            BottomNavigation(firstName: loginData!.user!.firstName,
+                            BottomNavigation(userId: loginData!.user!.sId
+                            ,firstName: loginData!.user!.firstName,
                                 lastName: loginData!.user!.lastName,initialIndex: 0,)
 
                             // CustomerHomeScreen(firstName: loginData!.user!.firstName,
@@ -75,7 +82,7 @@ class LoginProvider extends ChangeNotifier {
                         builder: (context) =>
 
                             AdminBottomNavigation(firstName: loginData!.user!.firstName,
-                                lastName: loginData!.user!.lastName)
+                                lastName: loginData!.user!.lastName,index: 0,)
 
                       // CustomerHomeScreen(firstName: loginData!.user!.firstName,
                       // lastName: loginData!.user!.lastName)

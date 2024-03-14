@@ -15,13 +15,14 @@ import '../utils/app_color.dart';
 class AdminBottomNavigation extends StatelessWidget {
   String? firstName;
   String? lastName;
-  AdminBottomNavigation({this.firstName,this.lastName});
+  int? index;
+  AdminBottomNavigation({this.firstName,this.lastName,this.index});
 
   @override
   Widget build(BuildContext context) {
 
     PersistentTabController _controller;
-    _controller = PersistentTabController(initialIndex: 0);
+    _controller = PersistentTabController(initialIndex: index!);
 
     List<Widget> _buildScreens() {
       return [

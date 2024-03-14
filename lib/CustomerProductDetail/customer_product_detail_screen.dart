@@ -6,6 +6,8 @@ import 'package:group1_mapd726_shoe_app/CustomerCart/customer_cart_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
+import '../CustomerCart/Provider/add_items_in_cart_provider.dart';
+import '../CustomerCart/Provider/all_cart_items_provider.dart';
 import '../Widgets/bottom_navigation.dart';
 import '../utils/app_color.dart';
 import '../utils/app_utils.dart';
@@ -28,6 +30,7 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
 
   bool isSelected = false;
   String sizeToCheck = '';
+  String userId = '';
 
   @override
   void initState() {
@@ -38,6 +41,7 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
 
   Future<void>? getDetails() async {
     if (this.mounted) {
+      userId = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefUserId)??"";
       setState(() {});
       Provider.of<ProductDetailProvider>(context,listen: false).getProductsById(widget.id!);
 
@@ -399,25 +403,39 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
                           Spacer(),
                           InkWell(
                             onTap: (){
+                              print(widget.id);
+                              print(productDetail.productDetailModel!.product!.sId!);
+                              Provider.of<AddItemsInCartProvider>(context, listen: false).
+                              addItemsInCart(context,
+                                  productDetail.productDetailModel!.product!.sId!,
+                                  userId,
+                                  productDetail.items,
+                                  productDetail.items * productDetail.productDetailModel!.product!.price!,
+                                  widget.firstName!,
+                                  widget.lastName!);
+                                    Provider.of<AllCartItemsProvider>(context,listen: false).deleteTotalPrice();
 
-                              AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductName,productDetail.productDetailModel!.product!.productName);
-                              AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductImage,productDetail.productDetailModel!.product!.imagesArray![0]);
-                              AppUtils.instance.addPref(PreferenceKey.intKey, PreferenceKey.prefQty,productDetail.items);
-                              AppUtils.instance.addPref(PreferenceKey.doubleKey, PreferenceKey.prefPrice,productDetail.productDetailModel!.product!.price);
 
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BottomNavigation(firstName: widget.firstName,
-                                      lastName: widget.lastName,initialIndex: 3,
-                                      productName: productDetail.productDetailModel!.product!.productName,
-                                      price: productDetail.productDetailModel!.product!.price,
-                                      qty: productDetail.items,
-                                      image: productDetail.productDetailModel!.product!.imagesArray![0],)
 
-                                  // CustomerHomeScreen(firstName: firstName,lastName: lastName)
-                                ),
-                              );
+
+                              // AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductName,productDetail.productDetailModel!.product!.productName);
+                              // AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductImage,productDetail.productDetailModel!.product!.imagesArray![0]);
+                              // AppUtils.instance.addPref(PreferenceKey.intKey, PreferenceKey.prefQty,productDetail.items);
+                              // AppUtils.instance.addPref(PreferenceKey.doubleKey, PreferenceKey.prefPrice,productDetail.productDetailModel!.product!.price);
+
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => BottomNavigation(firstName: widget.firstName,
+                              //         lastName: widget.lastName,initialIndex: 3,
+                              //         productName: productDetail.productDetailModel!.product!.productName,
+                              //         price: productDetail.productDetailModel!.product!.price,
+                              //         qty: productDetail.items,
+                              //         image: productDetail.productDetailModel!.product!.imagesArray![0],)
+                              //
+                              //     // CustomerHomeScreen(firstName: firstName,lastName: lastName)
+                              //   ),
+                              // );
 
                             },
                             child: Container(

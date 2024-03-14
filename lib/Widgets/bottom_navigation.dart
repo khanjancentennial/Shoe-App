@@ -8,16 +8,16 @@ import '../CustomerOrderHistory/customer_order_history_screen.dart';
 import '../CustomerProfile/customer_profile_screen.dart';
 import '../CustomerSearch/customer_serach_screen.dart';
 import '../utils/app_color.dart';
+import '../utils/app_utils.dart';
+import '../utils/preference_key.dart';
 
 class BottomNavigation extends StatelessWidget {
   String? firstName;
   String? lastName;
   int? initialIndex;
-  String? productName;
-  String? image;
-  int? qty;
-  double? price;
-  BottomNavigation({this.firstName,this.lastName,this.initialIndex,this.productName,this.image,this.qty,this.price});
+  String? userId;
+  BottomNavigation({this.firstName,this.lastName,this.initialIndex,this.userId});
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +30,7 @@ class BottomNavigation extends StatelessWidget {
         CustomerHomeScreen(firstName: firstName,lastName: lastName),
         CustomerSearchPage(),
         CustomerOrderHistory(),
-        CustomerCartScreen(productName: productName,
-          price: price,
-          qty: qty,
-          image: image),
+        CustomerCartScreen(userId: userId),
         CustomerProfileScreen()
       ];
     }

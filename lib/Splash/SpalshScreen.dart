@@ -24,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   String userType = "";
   String firstName = "";
   String lastName = "";
+  String userId = "";
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
       userType = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefUserType) ?? "";
       firstName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefFirstName)??"";
       lastName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefLastName)??"";
+      userId = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefUserId)??"";
       setState(() {});
     }
   }
@@ -80,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => BottomNavigation(firstName: firstName,lastName: lastName,initialIndex: 0,)
+                builder: (context) => BottomNavigation(userId: userId,firstName: firstName,lastName: lastName,initialIndex: 0,)
 
                     // CustomerHomeScreen(firstName: firstName,lastName: lastName)
             ),
@@ -89,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => AdminBottomNavigation(firstName: firstName,lastName: lastName)
+                builder: (context) => AdminBottomNavigation(firstName: firstName,lastName: lastName,index: 0,)
             ),
           );
         }

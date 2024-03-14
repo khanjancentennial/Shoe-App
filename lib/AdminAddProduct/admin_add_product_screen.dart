@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:group1_mapd726_shoe_app/AdminAddProduct/Model/select_size_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../Widgets/button_with_text.dart';
 import '../utils/app_color.dart';
 import '../utils/app_utils.dart';
+import 'Provider/admin_add_product_provider.dart';
 
 class AdminAddProductScreen extends StatefulWidget {
   const AdminAddProductScreen({super.key});
@@ -32,21 +34,25 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
   FocusNode colorFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
+  bool isFirstTime = true;
+
+  List<double> sizeArray = [];
   List<SelectSize> sizeList = [
-    SelectSize("7.0", false),
-    SelectSize("7.5", false),
-    SelectSize("8.0", false),
-    SelectSize("8.5", false),
-    SelectSize("9.0", false),
-    SelectSize("9.5", false),
-    SelectSize("10.0", false),
-    SelectSize("10.5", false),
-    SelectSize("11.0", false),
-    SelectSize("11.5", false),
-    SelectSize("12.0", false),
-    SelectSize("12.5", false),
+    SelectSize(7.0, false),
+    SelectSize(7.5, false),
+    SelectSize(8.0, false),
+    SelectSize(8.5, false),
+    SelectSize(9.0, false),
+    SelectSize(9.5, false),
+    SelectSize(10.0, false),
+    SelectSize(10.5, false),
+    SelectSize(11.0, false),
+    SelectSize(11.5, false),
+    SelectSize(12.0, false),
+    SelectSize(12.5, false),
 
   ];
+
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
@@ -434,10 +440,20 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                                         setState(() {
 
                                         });
+                                        if(sizeList[index].isSelected){
+                                          sizeArray.add(sizeList[index].size);
+                                          setState(() {
+                                          });
+                                        }else{
+                                          sizeArray.remove(sizeList[index].size);
+                                          setState(() {
+
+                                          });
+                                        }
                                       },
                                       child: Chip(
                                         backgroundColor: sizeList[index].isSelected? AppColors.buttonColor:AppColors.homeScreenColor,
-                                        label: Text(sizeList[index].size,
+                                        label: Text("${sizeList[index].size}",
                                           style: AppUtils.instance.textStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -456,6 +472,24 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 2),
+
+                isFirstTime == false ?
+                sizeArray.isEmpty ?
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10,left: 13),
+                  child: Text("Please select show size",
+                    style: AppUtils.instance.textStyle(
+                        color: AppColors.darkRed
+                    ),
+                  ),
+                )
+                    :
+                const SizedBox()
+                :const SizedBox(),
+
                 const SizedBox(height: 20),
 
 
@@ -484,12 +518,27 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
                         );
                       }),
                 ),
+                const SizedBox(height: 2),
+                isFirstTime == false ?
+                imageFileList!.isEmpty ?
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10,left: 13),
+                  child: Text("Please select images",
+                    style: AppUtils.instance.textStyle(
+                        color: AppColors.darkRed
+                    ),
+                  ),
+                )
+                    :
+                const SizedBox()
+                    :const SizedBox(),
                 const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   child: buttonWithText(
                       onPress: () {
-                        // validations();
+                        validations();
                       },
                       bgColor: AppColors.buttonColor,
                       height: 60,
@@ -518,6 +567,52 @@ class _AdminAddProductScreenState extends State<AdminAddProductScreen> {
     print("Image List Length: ${imageFileList!.length}");
     setState((){});
   }
+
+  void validations() async {
+    isFirstTime = false;
+    setState(() {
+    });
+
+    if(_formKey.currentState!.validate()){
+
+      if(sizeArray.isNotEmpty && imageFileList!.isNotEmpty){
+        Provider.of<AdminAddProductProvider>(context, listen: false).addProducts(
+          context,
+          productName.text.toString(),
+          dropdownValue.toString(),
+          productType.text.toString(),
+          price.text.toString(),
+          productDetails.text.toString(),
+          sizeArray,
+          shoeSizeIn.text.toString(),
+          color.text.toString(),
+          imageFileList!
+        );
+      }
+
+
+      //     .then((value) {
+      //
+      //   if (value!.success == true){
+      //
+      //     AppUtils.instance.showToast(
+      //         textColor: Colors.white,
+      //         backgroundColor: Colors.green,
+      //         toastMessage: "${value.message}");
+      //     Navigator.pop(context);
+      //
+      //   } else {
+      //     AppUtils.instance.showToast(
+      //         textColor: Colors.white,
+      //         backgroundColor: AppColors.red,
+      //         toastMessage: "${value.message}");
+      //   }
+      // });
+
+
+    }
+  }
+
 
 
 }

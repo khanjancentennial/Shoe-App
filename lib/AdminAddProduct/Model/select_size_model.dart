@@ -1,5 +1,5 @@
 class SelectSize{
-  String size;
+  double size;
   bool isSelected;
 
   SelectSize(this.size,this.isSelected);

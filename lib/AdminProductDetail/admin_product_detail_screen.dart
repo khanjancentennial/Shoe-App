@@ -2,11 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:group1_mapd726_shoe_app/AdminEditProduct/admin_edit_product_screen.dart';
+import 'package:group1_mapd726_shoe_app/AdminProductDetail/Provider/admin_delete_product.dart';
+import 'package:group1_mapd726_shoe_app/Widgets/admin_bottom_navigation.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/app_color.dart';
 import '../utils/app_utils.dart';
+import '../utils/preference_key.dart';
 import 'Provider/product_detail_provider.dart';
 
 class AdminProductDetailScreen extends StatefulWidget {
@@ -23,6 +26,9 @@ class _AdminProductDetailScreenState extends State<AdminProductDetailScreen> {
   bool isSelected = false;
   String sizeToCheck = '';
 
+  String firstName = '';
+  String lastName = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,6 +38,8 @@ class _AdminProductDetailScreenState extends State<AdminProductDetailScreen> {
 
   Future<void>? getDetails() async {
     if (this.mounted) {
+      firstName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefFirstName)??"";
+      lastName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefLastName)??"";
       setState(() {});
       Provider.of<AdminProductDetailProvider>(context,listen: false).getProductsById(widget.id!);
 
@@ -325,7 +333,18 @@ class _AdminProductDetailScreenState extends State<AdminProductDetailScreen> {
                                   onTap: (){
                                     PersistentNavBarNavigator.pushNewScreen(
                                       context,
-                                      screen: const AdminEditProductScreen(),
+                                      screen: AdminEditProductScreen(
+                                          productName : productDetail.productDetailModel!.product!.productName,
+                                          price: productDetail.productDetailModel!.product!.price.toString(),
+                                          productId: productDetail.productDetailModel!.product!.sId,
+                                          color : productDetail.productDetailModel!.product!.shoeColor,
+                                          shoeSizeIn : productDetail.productDetailModel!.product!.shoeSizeText,
+                                          sizeList: productDetail.productDetailModel!.product!.sizeArray!,
+                                          productDetails : productDetail.productDetailModel!.product!.details,
+                                          productType : productDetail.productDetailModel!.product!.shoeType,
+                                          brandName : productDetail.productDetailModel!.product!.brandName
+
+                                      ),
                                       withNavBar: false, // OPTIONAL VALUE. True by default.
                                       pageTransitionAnimation: PageTransitionAnimation.cupertino,
                                     );
@@ -380,7 +399,18 @@ class _AdminProductDetailScreenState extends State<AdminProductDetailScreen> {
                                                 ),
                                               ),
                                               TextButton(
-                                                onPressed: () => Navigator.pop(context, 'OK'),
+                                                onPressed: () {
+                                                  Provider.of<AdminDeleteProductProvider>(context,listen: false).deleteProduct(context, widget.id!)
+                                                      .then((value) {
+                                                    Navigator.pop(context);
+                                                    Navigator.pushReplacement(context,
+                                                        MaterialPageRoute(builder: (builder) =>
+                                                            AdminBottomNavigation(firstName: firstName,lastName: lastName,index: 2)
+                                                        )
+                                                    );
+                                                  });
+
+                                                },
                                                 child:  Text('Yes',
                                                     style: AppUtils.instance.textStyle(
                                                         fontWeight: FontWeight.bold,
