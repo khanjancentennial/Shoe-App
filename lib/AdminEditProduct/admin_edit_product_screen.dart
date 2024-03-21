@@ -90,7 +90,9 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
       productType.text = widget.productType!;
       price.text = widget.price!;
       productDetails.text = widget.productDetails!;
-      shoeSizeIn.text = widget.shoeSizeIn!;
+      // shoeSizeIn.text = widget.shoeSizeIn!;
+      Provider.of<AdminEditProductProvider>(context,listen: false).isUS = widget.shoeSizeIn == "US" ? true :false;
+      Provider.of<AdminEditProductProvider>(context,listen: false).isUK = widget.shoeSizeIn == "UK" ? true :false;
       color.text = widget.color!;
 
 
@@ -126,6 +128,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 50,top: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 50),
 
@@ -325,44 +328,148 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                 ),
                 const SizedBox(height: 20),
 
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 20,right: 20),
+                //   child: TextFormField(
+                //     onTap: () {},
+                //     controller: shoeSizeIn,
+                //     focusNode: shoeSizeInFocusNode,
+                //     decoration: InputDecoration(
+                //       border: const OutlineInputBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                //         borderSide: BorderSide.none,
+                //       ),
+                //       filled: true,
+                //       fillColor: AppColors.textFieldColor,
+                //       hintText: "Enter Shoe Size in (US or UK)",
+                //       hintStyle: AppUtils.instance.textStyle(
+                //         color: AppColors.grey,
+                //         fontWeight: FontWeight.w400,
+                //       ),
+                //       // prefixIcon: Container(
+                //       //   padding: const EdgeInsets.only(left: 5,right: 11),
+                //       //   child: Image.asset(AppImage.user,
+                //       //     scale: 20,
+                //       //     // color: AppColors.grey,
+                //       //   ),
+                //       // ),
+                //
+                //     ),
+                //     validator: (value) {
+                //       if (value!.isEmpty) {
+                //         return "Please enter shoe size";
+                //       } else {
+                //         return null;
+                //       }
+                //     },
+                //
+                //   ),
+                // ),
+                // const SizedBox(height: 20),
+
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
-                  child: TextFormField(
-                    onTap: () {},
-                    controller: shoeSizeIn,
-                    focusNode: shoeSizeInFocusNode,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: AppColors.textFieldColor,
-                      hintText: "Enter Shoe Size in (US or UK)",
-                      hintStyle: AppUtils.instance.textStyle(
-                        color: AppColors.grey,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      // prefixIcon: Container(
-                      //   padding: const EdgeInsets.only(left: 5,right: 11),
-                      //   child: Image.asset(AppImage.user,
-                      //     scale: 20,
-                      //     // color: AppColors.grey,
-                      //   ),
-                      // ),
+                  padding: const EdgeInsets.only(left: 25,right: 20),
+                  child: Text("Select Size In US or UK:",
+                      style: AppUtils.instance.textStyle(color: AppColors.black,
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 16
+                      )),
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25,right: 20),
+                  child: Consumer<AdminEditProductProvider>(
+                    builder: (_, sizeCheck, child) => Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            sizeCheck.showSizeInCheck("US");
+                          },
+                          child: Row(
+                            children: [
+                              sizeCheck.isUS
+                                  ? const CircleAvatar(
+                                backgroundColor:
+                                AppColors.buttonColor,
+                                radius: 11,
+                              )
+                                  : const CircleAvatar(
+                                backgroundColor: AppColors.black,
+                                radius: 11,
+                                child: CircleAvatar(
+                                  radius: 10,
+                                  backgroundColor:
+                                  AppColors.homeScreenColor,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                "US",
+                                style: AppUtils.instance.textStyle(
+                                    fontSize: 16,
+                                    color: AppColors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        InkWell(
+                          onTap: () {
+                            sizeCheck.showSizeInCheck("UK");
+                          },
+                          child: Row(
+                            children: [
+                              sizeCheck.isUK
+                                  ? const CircleAvatar(
+                                backgroundColor:
+                                AppColors.buttonColor,
+                                radius: 11,
+                              )
+                                  : const CircleAvatar(
+                                backgroundColor: AppColors.black,
+                                radius: 11,
+                                child: CircleAvatar(
+                                  radius: 10,
+                                  backgroundColor:
+                                  AppColors.homeScreenColor,
+                                ),
+                              ),
 
+                              const SizedBox(width: 10),
+                              Text(
+                                "UK",
+                                style: AppUtils.instance.textStyle(
+                                    fontSize: 16,
+                                    color: AppColors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter shoe size";
-                      } else {
-                        return null;
-                      }
-                    },
-
                   ),
                 ),
-                const SizedBox(height: 20),
+
+                isFirstTime == false?
+                Consumer<AdminEditProductProvider>(
+                    builder: (_, sizeCheck1, child) =>
+                    sizeCheck1.isUS == false || sizeCheck1.isUK == false ?
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10,left: 25),
+                      child: Text("Please select size in US or UK",
+                        style: AppUtils.instance.textStyle(
+                            color: AppColors.darkRed
+                        ),
+                      ),
+                    )
+                        :
+                    const SizedBox()
+                )
+                    :
+                const SizedBox(),
+                SizedBox(height: 20),
+
 
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20),
@@ -411,7 +518,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                       Text("Select Brand: ",
                           style: AppUtils.instance.textStyle(
                               color: AppColors.black,
-                              fontSize: 18
+                              fontSize: 16
                           )
                       ),
                       const SizedBox(width: 20),
@@ -446,12 +553,12 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
                 ),
                 const SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(left: 25,right: 20),
                   child: Row(
                     children: [
                       Text("Please Select Available Sizes:",
                           style: AppUtils.instance.textStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: AppColors.black,
                           )
                       ),
@@ -596,11 +703,23 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
 
 
   void validations() async {
-    isFirstTime = false;
-    setState(() {
-    });
 
-    if(_formKey.currentState!.validate()){
+    if(Provider.of<AdminEditProductProvider>(context,listen: false).isUS ||
+        Provider.of<AdminEditProductProvider>(context,listen: false).isUK){
+      isFirstTime = true;
+      setState(() {
+
+      });
+    }else{
+      isFirstTime = false;
+      setState(() {
+
+      });
+    }
+
+
+    if(_formKey.currentState!.validate() && Provider.of<AdminEditProductProvider>(context,listen: false).isUS ||
+        Provider.of<AdminEditProductProvider>(context,listen: false).isUK){
       Provider.of<AdminEditProductProvider>(context, listen: false).editProduct(
           context,
           productName.text.toString(),
@@ -609,7 +728,7 @@ class _AdminEditProductScreenState extends State<AdminEditProductScreen> {
           price.text.toString(),
           productDetails.text.toString(),
           "${sizeArray}",
-          shoeSizeIn.text.toString(),
+          Provider.of<AdminEditProductProvider>(context,listen: false).isUS ?"US" :"UK",
           color.text.toString(),
           widget.productId!,
           firstName,

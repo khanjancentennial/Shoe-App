@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:group1_mapd726_shoe_app/utils/app_color.dart';
 import 'package:provider/provider.dart';
 
+import '../CustomerOrderHistory/Provider/checkout_provider.dart';
 import '../Widgets/bottom_navigation.dart';
 import '../Widgets/button_with_text.dart';
 import '../utils/app_utils.dart';
@@ -182,7 +183,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                                                     fontWeight: FontWeight.bold
                                                 ),
                                               ),
-                                              Text("Total price: \$ ${allCartItems.allCartItemsModel!.cartItems![index].totalPrice}",
+                                              Text("Total price: \n\$ ${allCartItems.allCartItemsModel!.cartItems![index].totalPrice}",
                                                 style: AppUtils.instance.textStyle(
                                                     fontSize: 20,
                                                     color: AppColors.black,
@@ -192,7 +193,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                                             ],
                                           ),
                                         ),
-                                        const SizedBox(width: 20),
+                                        SizedBox(width: MediaQuery.of(context).size.width/7),
                                         InkWell(
                                           onTap: (){
                                             showDialog<String>(
@@ -279,6 +280,11 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                   bottom: 20,
                   child: buttonWithText(
                       onPress: () {
+                        Provider.of<CheckOutProvider>(context,listen: false).
+                        checkOut(context,
+                            widget.userId != null || widget.userId!.isNotEmpty  ? widget.userId!:customerId!,
+                            firstName!,
+                            lastName!);
                       },
                       bgColor: AppColors.buttonColor,
                       height: 60,

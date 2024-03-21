@@ -17,8 +17,8 @@ import '../Model/admin_add_product_model.dart';
 class AdminAddProductProvider extends ChangeNotifier {
   AdminAddProductModel? adminAddProductModel;
   bool isLoading=false;
-  bool isFemale = false;
-  bool isMale = false;
+  bool isUK = false;
+  bool isUS = false;
 
   Future<AdminAddProductModel?> addProducts(
       BuildContext context,
@@ -150,6 +150,18 @@ class AdminAddProductProvider extends ChangeNotifier {
   void stopLoading(){
     isLoading=false;
     notifyListeners();
+  }
+
+  void showSizeInCheck(String showSizeIn){
+    if(showSizeIn == "US"){
+      isUS = !isUS;
+      isUK = false;
+      notifyListeners();
+    }else{
+      isUK = !isUK;
+      isUS = false;
+      notifyListeners();
+    }
   }
 
 }

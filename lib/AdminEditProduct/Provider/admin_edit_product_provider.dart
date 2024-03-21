@@ -20,6 +20,9 @@ class AdminEditProductProvider extends ChangeNotifier {
   bool isFemale = false;
   bool isMale = false;
 
+  bool isUK = false;
+  bool isUS = false;
+
   Future<AdminEditProductModel?> editProduct(
       BuildContext context,
       String productName,
@@ -143,14 +146,14 @@ class AdminEditProductProvider extends ChangeNotifier {
 
   }
 
-  void genderCheck(String gender){
-    if(gender == "Male"){
-      isMale = !isMale;
-      isFemale = false;
+  void showSizeInCheck(String showSizeIn){
+    if(showSizeIn == "US"){
+      isUS = !isUS;
+      isUK = false;
       notifyListeners();
     }else{
-      isFemale = !isFemale;
-      isMale = false;
+      isUK = !isUK;
+      isUS = false;
       notifyListeners();
     }
   }

@@ -14,5 +14,11 @@ class ApiNetwork{
   static const ADD_ITEMS_IN_CART = BASE_URL+"/cartitems";
   static const GET_ALL_CART_ITEMS = BASE_URL+"/cart";
 
+  static const CHECKOUT = BASE_URL+"/checkout";
+  static const CUSTOMER_ORDER_LIST = BASE_URL+"/orderList";
+
+  static const ADMIN_ALL_ORDERS = BASE_URL+"/orders";
+  static const ADMIN_ALL_ORDERS_STATUS_CHANGE = BASE_URL+"/orderStatus";
+
 
 }

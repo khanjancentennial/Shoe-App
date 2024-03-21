@@ -8,12 +8,17 @@ import 'package:provider/provider.dart';
 
 import 'AdminAddProduct/Provider/admin_add_product_provider.dart';
 import 'AdminEditProduct/Provider/admin_edit_product_provider.dart';
+import 'AdminOrderManage/Provider/admin_all_orders_manage_provider.dart';
+import 'AdminOrderManage/Provider/admin_change_order_status_provider.dart';
 import 'AdminProductDetail/Provider/admin_delete_product.dart';
 import 'AdminProductDetail/Provider/product_detail_provider.dart';
 import 'CustomerCart/Provider/add_items_in_cart_provider.dart';
 import 'CustomerCart/Provider/all_cart_items_provider.dart';
 import 'CustomerCart/Provider/delete_cart_items_provider.dart';
 import 'CustomerHome/Provider/customer_home_provider.dart';
+import 'CustomerOrderHistory/Provider/all_order_by_customer_id_provider.dart';
+import 'CustomerOrderHistory/Provider/checkout_provider.dart';
+import 'CustomerOrderHistory/Provider/customer_delete_order_by_id_provider.dart';
 import 'CustomerProductDetail/Provider/product_detail_provider.dart';
 import 'CustomerProfile/Provider/update_profile_provider.dart';
 import 'CustomerProfile/Provider/user_profile_provider.dart';
@@ -63,6 +68,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AddItemsInCartProvider>(create: (context) => AddItemsInCartProvider()),
         ChangeNotifierProvider<AllCartItemsProvider>(create: (context) => AllCartItemsProvider()),
         ChangeNotifierProvider<DeleteCaretItemsProvider>(create: (context) => DeleteCaretItemsProvider()),
+
+        ChangeNotifierProvider<CheckOutProvider>(create: (context) => CheckOutProvider()),
+        ChangeNotifierProvider<AllOrdersByCustomerIdProvider>(create: (context) => AllOrdersByCustomerIdProvider()),
+        ChangeNotifierProvider<CustomerDeleteOrderByIdProvider>(create: (context) => CustomerDeleteOrderByIdProvider()),
+
+        ChangeNotifierProvider<AdminAllOrdersManageProvider>(create: (context) => AdminAllOrdersManageProvider()),
+        ChangeNotifierProvider<AdminChangeOrderStatusProvider>(create: (context) => AdminChangeOrderStatusProvider()),
 
       ],
       child: MaterialApp(

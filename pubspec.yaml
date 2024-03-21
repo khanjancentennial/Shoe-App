@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.2.2
   fluttertoast: ^8.2.4
   provider: ^6.1.1
+  horizontal_stepper_flutter: ^1.0.3
 
   flutter:
     sdk: flutter
