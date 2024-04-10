@@ -36,7 +36,7 @@ class _CustomerOrderHistoryState extends State<CustomerOrderHistory> {
       lastName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefLastName)??"";
 
       setState(() {});
-      Provider.of<AllOrdersByCustomerIdProvider>(context,listen: false).allOrders(context,customerId!);
+      Provider.of<AllOrdersByCustomerIdProvider>(context,listen: false).allOrders(context,customerId);
 
       // for(int i =0;i< Provider.of<AllCartItemsProvider>(context,listen: false).allCartItemsModel!.cartItems!.length;i++){
       //   totalPriceInLoop = Provider.of<AllCartItemsProvider>(context,listen: false).allCartItemsModel!.cartItems![i].totalPrice!;
@@ -182,7 +182,7 @@ class _CustomerOrderHistoryState extends State<CustomerOrderHistory> {
                                                         fontWeight: FontWeight.bold
                                                     ),
                                                   ),
-                                                  Text("Total price: \$ ${allOrders.pendingOrders[index].totalPrice}",
+                                                  Text("Total price: \n \$ ${allOrders.pendingOrders[index].totalPrice}",
                                                     style: AppUtils.instance.textStyle(
                                                         fontSize: 20,
                                                         color: AppColors.black,

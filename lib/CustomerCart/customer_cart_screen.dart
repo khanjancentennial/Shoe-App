@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:group1_mapd726_shoe_app/utils/app_color.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +14,8 @@ import '../utils/app_utils.dart';
 import '../utils/preference_key.dart';
 import 'Provider/all_cart_items_provider.dart';
 import 'Provider/delete_cart_items_provider.dart';
+import 'package:http/http.dart' as http;
+
 
 class CustomerCartScreen extends StatefulWidget {
   String? userId;
@@ -27,7 +33,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
   // String? productImage;
   // int? qty;
   // double? price;
-
+  Map<String, dynamic>? paymentIntent;
   String? customerId = '';
   String? firstName = '';
   String? lastName = '';
@@ -280,11 +286,10 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                   bottom: 20,
                   child: buttonWithText(
                       onPress: () {
-                        Provider.of<CheckOutProvider>(context,listen: false).
-                        checkOut(context,
-                            widget.userId != null || widget.userId!.isNotEmpty  ? widget.userId!:customerId!,
-                            firstName!,
-                            lastName!);
+                        String numberString = "${allCartItems.totalPrice.toStringAsFixed(2)}";
+                        String integerString = numberString.replaceAll(".", "");
+                        stripeMakePayment(integerString);
+
                       },
                       bgColor: AppColors.buttonColor,
                       height: 60,
@@ -301,5 +306,105 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
         ),
       ),
     );
+  }
+
+
+  Future<void> stripeMakePayment(String total) async {
+    try {
+      paymentIntent = await createPaymentIntent(total, 'CAD');
+      await Stripe.instance
+          .initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+              // billingDetails: BillingDetails(
+              //     name: 'YOUR NAME',
+              //     email: 'YOUREMAIL@gmail.com',
+              //     phone: 'YOUR NUMBER',
+              //     // address: Address(
+              //     //     city: 'YOUR CITY',
+              //     //     country: 'YOUR COUNTRY',
+              //     //     line1: 'YOUR ADDRESS 1',
+              //     //     line2: 'YOUR ADDRESS 2',
+              //     //     postalCode: 'YOUR PINCODE',
+              //     //     state: 'YOUR STATE')
+              //     ),
+              paymentIntentClientSecret: paymentIntent![
+              'client_secret'], //Gotten from payment intent
+               style: ThemeMode.light,
+              merchantDisplayName: 'Ikay'))
+          .then((value) {
+
+      });
+
+      //STEP 3: Display Payment sheet
+      displayPaymentSheet();
+    } catch (e) {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+
+  displayPaymentSheet() async {
+    try {
+      // 3. display the payment sheet.
+      var isCompleted = await Stripe.instance.presentPaymentSheet();
+      print(isCompleted);
+
+      AppUtils.instance.showToast(
+        toastMessage: 'Payment successfully completed',
+        backgroundColor: AppColors.green,
+        textColor: AppColors.white
+      );
+
+
+      Provider.of<CheckOutProvider>(context,listen: false).
+    checkOut(context,
+        widget.userId != null || widget.userId!.isNotEmpty  ? widget.userId!:customerId!,
+        firstName!,
+        lastName!);
+
+
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        Fluttertoast.showToast(
+            msg: 'Error from Stripe: ${e.error.localizedMessage}');
+      } else {
+        Fluttertoast.showToast(msg: 'Unforeseen error: ${e}');
+      }
+    }
+  }
+
+//create Payment
+  createPaymentIntent(String amount, String currency) async {
+    try {
+      //Request body
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+      };
+
+      //Make post request to Stripe
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer sk_test_51Oy4n800d1dMf41h0nfEw85buj2ylflNFU8hwAfK83j2NSoVJdLc2PAV2TRYGVoCrlUeohzKONqbHmkKERjfjiCd00vgvO2mIW',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
+      var fullResponse = json.decode(response.body);
+
+      print(fullResponse);
+
+      return fullResponse;
+    } catch (err) {
+      throw Exception(err.toString());
+    }
+  }
+
+//calculate Amount
+  calculateAmount(String amount) {
+    final calculatedAmount = amount;
+    print(calculatedAmount.runtimeType);
+    return calculatedAmount;
   }
 }

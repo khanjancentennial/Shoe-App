@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget buttonWithText(
     {VoidCallback? onPress,
@@ -23,7 +22,7 @@ Widget buttonWithText(
         onPressed: onPress,
         child: Text(text ?? "",
             style: TextStyle(
-              color: textColor, fontSize: fontSize, fontWeight: fontWeight, fontFamily: GoogleFonts.ubuntu().fontFamily,
+              color: textColor, fontSize: fontSize, fontWeight: fontWeight,
             ))),
   );
 }

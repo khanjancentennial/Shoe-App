@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:group1_mapd726_shoe_app/utils/preference_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
