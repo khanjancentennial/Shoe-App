@@ -28,7 +28,7 @@ class BottomNavigation extends StatelessWidget {
     List<Widget> _buildScreens() {
       return [
         CustomerHomeScreen(firstName: firstName,lastName: lastName),
-        CustomerSearchPage(),
+        // CustomerSearchPage(),
         CustomerOrderHistory(),
         CustomerCartScreen(userId: userId),
         CustomerProfileScreen()
@@ -43,12 +43,12 @@ class BottomNavigation extends StatelessWidget {
           activeColorPrimary: AppColors.black,
           inactiveColorPrimary: AppColors.white,
         ),
-        PersistentBottomNavBarItem(
-          icon: Icon(Icons.search_outlined),
-          // title: ("Settings"),
-          activeColorPrimary: AppColors.black,
-          inactiveColorPrimary: AppColors.white,
-        ),
+        // PersistentBottomNavBarItem(
+        //   icon: Icon(Icons.search_outlined),
+        //   // title: ("Settings"),
+        //   activeColorPrimary: AppColors.black,
+        //   inactiveColorPrimary: AppColors.white,
+        // ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.history_outlined),
           // title: ("Settings"),
