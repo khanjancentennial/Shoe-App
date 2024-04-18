@@ -477,7 +477,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                  color: AppColors.darkRed,
                                ),
                                const SizedBox(width: 10),
-                               Text("${topFiveProducts.topFiveProductsModel!.product1Name}")
+                               Text("${topFiveProducts.topFiveProductsModel!.num1Name}")
                              ]
 
                            ),
@@ -488,7 +488,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                    color: AppColors.green,
                                  ),
                                  const SizedBox(width: 10),
-                                 Text("${topFiveProducts.topFiveProductsModel!.product2Name}")
+                                 Text("${topFiveProducts.topFiveProductsModel!.num2Name}")
                                ]
 
                            ),
@@ -499,7 +499,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                    color: AppColors.black,
                                  ),
                                  const SizedBox(width: 10),
-                                 Text("${topFiveProducts.topFiveProductsModel!.product3Name}")
+                                 Text("${topFiveProducts.topFiveProductsModel!.num3Name}")
                                ]
 
                            ),
@@ -510,7 +510,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                    color: AppColors.red,
                                  ),
                                  const SizedBox(width: 10),
-                                 Text("${topFiveProducts.topFiveProductsModel!.product4Name}")
+                                 Text("${topFiveProducts.topFiveProductsModel!.num4Name}")
                                ]
 
                            ),
@@ -521,7 +521,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                                    color: Colors.blueAccent,
                                  ),
                                  const SizedBox(width: 10),
-                                 Text("${topFiveProducts.topFiveProductsModel!.product5Name}")
+                                 Text("${topFiveProducts.topFiveProductsModel!.num5Name}")
                                ]
 
                            ),
@@ -814,8 +814,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         case 0:
           return PieChartSectionData(
             color: AppColors.darkRed,
-            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product1Totalquantity?.toDouble(),
-            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product1Totalquantity.toString(),
+            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num1Totalquantity?.toDouble(),
+            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num1Totalquantity.toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -827,8 +827,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         case 1:
           return PieChartSectionData(
             color: AppColors.green,
-            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product2Totalquantity!.toDouble(),
-            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product2Totalquantity.toString(),
+            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num2Totalquantity!.toDouble(),
+            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num2Totalquantity.toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -840,8 +840,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         case 2:
           return PieChartSectionData(
             color: AppColors.black,
-            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product3Totalquantity!.toDouble(),
-            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product3Totalquantity.toString(),
+            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num3Totalquantity!.toDouble(),
+            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num3Totalquantity.toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -853,8 +853,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         case 3:
           return PieChartSectionData(
             color: AppColors.red,
-            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product4Totalquantity!.toDouble(),
-            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product4Totalquantity.toString(),
+            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num4Totalquantity!.toDouble(),
+            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num4Totalquantity.toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -866,8 +866,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         case 4:
           return PieChartSectionData(
             color: Colors.blueAccent,
-            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product5Totalquantity!.toDouble(),
-            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.product5Totalquantity.toString(),
+            value: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num5Totalquantity!.toDouble(),
+            title: Provider.of<TopFiveProductsProvider>(context,listen: false).topFiveProductsModel!.num5Totalquantity.toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

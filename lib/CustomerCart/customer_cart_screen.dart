@@ -29,10 +29,6 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
   double totalPriceInLoop = 0.0;
   double totalPrice = 0.0;
 
-  // String? productName;
-  // String? productImage;
-  // int? qty;
-  // double? price;
   Map<String, dynamic>? paymentIntent;
   String? customerId = '';
   String? firstName = '';
@@ -53,13 +49,6 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
       lastName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefLastName)??"";
       setState(() {});
       Provider.of<AllCartItemsProvider>(context,listen: false).getProductsByCustomerId(widget.userId != null || widget.userId!.isNotEmpty  ? widget.userId!:customerId!);
-
-      // for(int i =0;i< Provider.of<AllCartItemsProvider>(context,listen: false).allCartItemsModel!.cartItems!.length;i++){
-      //   totalPriceInLoop = Provider.of<AllCartItemsProvider>(context,listen: false).allCartItemsModel!.cartItems![i].totalPrice!;
-      //   totalPrice = totalPrice + totalPriceInLoop;
-      // }
-
-      // totalPrice = price! == 0.0 && qty! == 0 ?widget.qty! * widget.price! : qty! * price!;
 
 
     }
@@ -189,7 +178,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                                                     fontWeight: FontWeight.bold
                                                 ),
                                               ),
-                                              Text("Total price: \n\$ ${allCartItems.allCartItemsModel!.cartItems![index].totalPrice}",
+                                              Text("Total price: \n\$ ${allCartItems.allCartItemsModel!.cartItems![index].totalPrice!.toStringAsFixed(2)}",
                                                 style: AppUtils.instance.textStyle(
                                                     fontSize: 20,
                                                     color: AppColors.black,
@@ -229,7 +218,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                                                             Navigator.pushReplacement(context,
                                                                 MaterialPageRoute(builder: (builder) =>
                                                                     BottomNavigation(userId: widget.userId != null || widget.userId!.isNotEmpty  ? widget.userId!:customerId!,
-                                                                        firstName: firstName,lastName: lastName,initialIndex: 3)
+                                                                        firstName: firstName,lastName: lastName,initialIndex: 2)
                                                                 )
                                                             );
                                                           });
@@ -315,18 +304,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
       await Stripe.instance
           .initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
-              // billingDetails: BillingDetails(
-              //     name: 'YOUR NAME',
-              //     email: 'YOUREMAIL@gmail.com',
-              //     phone: 'YOUR NUMBER',
-              //     // address: Address(
-              //     //     city: 'YOUR CITY',
-              //     //     country: 'YOUR COUNTRY',
-              //     //     line1: 'YOUR ADDRESS 1',
-              //     //     line2: 'YOUR ADDRESS 2',
-              //     //     postalCode: 'YOUR PINCODE',
-              //     //     state: 'YOUR STATE')
-              //     ),
+
               paymentIntentClientSecret: paymentIntent![
               'client_secret'], //Gotten from payment intent
                style: ThemeMode.light,

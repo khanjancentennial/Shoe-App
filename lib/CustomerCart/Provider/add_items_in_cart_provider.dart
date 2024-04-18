@@ -50,7 +50,7 @@ class AddItemsInCartProvider extends ChangeNotifier {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => BottomNavigation(userId:userId,firstName: firstName,lastName: lastName,initialIndex: 3)
+                builder: (context) => BottomNavigation(userId:userId,firstName: firstName,lastName: lastName,initialIndex: 2)
 
               // CustomerHomeScreen(firstName: firstName,lastName: lastName)
             ),

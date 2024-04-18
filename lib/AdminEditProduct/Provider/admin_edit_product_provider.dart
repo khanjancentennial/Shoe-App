@@ -65,7 +65,7 @@ class AdminEditProductProvider extends ChangeNotifier {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => AdminBottomNavigation(
-              firstName: firstName,lastName: lastName,index: 0,)),
+              firstName: firstName,lastName: lastName,index: 2,)),
           );
 
           AppUtils.instance.showToast(

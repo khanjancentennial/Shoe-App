@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:group1_mapd726_shoe_app/AdminUsersManage/customer_profile_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
-import '../Widgets/admin_bottom_navigation.dart';
-import '../Widgets/bottom_navigation.dart';
 import '../utils/app_color.dart';
 import '../utils/app_utils.dart';
 import '../utils/preference_key.dart';
-import 'Provider/delete_user_provider.dart';
 import 'Provider/get_all_users_provider.dart';
 
 class AdminUserManageScreen extends StatefulWidget {
@@ -34,20 +29,11 @@ class _AdminUserManageScreenState extends State<AdminUserManageScreen> {
 
   Future<void>? getDetails() async {
     if (this.mounted) {
-      // print(widget.userId!);
       customerId = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefUserId)??"";
       firstName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefFirstName)??"";
       lastName = await AppUtils.instance.getPreferenceValueViaKey(PreferenceKey.prefLastName)??"";
       setState(() {});
       Provider.of<GetAllUsersProvider>(context,listen: false).getAllUsers();
-
-      // for(int i =0;i< Provider.of<AllCartItemsProvider>(context,listen: false).allCartItemsModel!.cartItems!.length;i++){
-      //   totalPriceInLoop = Provider.of<AllCartItemsProvider>(context,listen: false).allCartItemsModel!.cartItems![i].totalPrice!;
-      //   totalPrice = totalPrice + totalPriceInLoop;
-      // }
-
-      // totalPrice = price! == 0.0 && qty! == 0 ?widget.qty! * widget.price! : qty! * price!;
-
 
     }
   }
@@ -170,88 +156,88 @@ class _AdminUserManageScreenState extends State<AdminUserManageScreen> {
                                           ),
                                         ),
                                         SizedBox(width: MediaQuery.of(context).size.width/7),
-                                        Column(
-                                          children: [
-                                            InkWell(
-                                              onTap: (){
-                                                PersistentNavBarNavigator.pushNewScreen(
-                                                  context,
-                                                  screen: CustomerProfileScreen(userId: getAllUsers.getAllCustomersModel!.users![index].sId!,),
-                                                  withNavBar: false, // OPTIONAL VALUE. True by default.
-                                                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                                                );
-                                              },
-                                              child: Container(
-                                                height: 40,
-                                                width: 40,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.buttonColor,
-                                                    borderRadius: BorderRadius.circular(10)
-                                                ),
-                                                child: Icon(Icons.edit),
-                                              ),
-                                            ),
-
-                                            SizedBox(height: 20),
-                                            InkWell(
-                                              onTap: (){
-                                                showDialog<String>(
-                                                  context: context,
-                                                  builder: (BuildContext context) => AlertDialog(
-                                                    title: const Center(child: Text('Are you sure you want to delete user?')),
-                                                    actions: <Widget>[
-                                                      Row(
-                                                        mainAxisAlignment : MainAxisAlignment.center,
-                                                        children: [
-                                                          TextButton(
-                                                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                                                            child: Text('Cancel',
-                                                                style: AppUtils.instance.textStyle(
-                                                                    fontWeight: FontWeight.bold,
-                                                                    fontSize: 18,
-                                                                    color: AppColors.green
-                                                                )
-                                                            ),
-                                                          ),
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              Provider.of<DeleteUserProvider>(context,listen: false).deleteCartItem(context, getAllUsers.getAllCustomersModel!.users![index].sId!)
-                                                                  .then((value) {
-                                                                Navigator.pop(context);
-                                                                Navigator.pushReplacement(context,
-                                                                    MaterialPageRoute(builder: (builder) =>
-                                                                        AdminBottomNavigation(index: 3,firstName: firstName,lastName: lastName)
-                                                                    )
-                                                                );
-                                                              });
-                                                            },
-                                                            child:  Text('Yes',
-                                                                style: AppUtils.instance.textStyle(
-                                                                    fontWeight: FontWeight.bold,
-                                                                    fontSize: 18,
-                                                                    color: AppColors.red
-                                                                )
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                height: 40,
-                                                width: 40,
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.red,
-                                                    borderRadius: BorderRadius.circular(10)
-                                                ),
-                                                child: Icon(Icons.delete),
-                                              ),
-                                            ),
-                                          ],
-                                        )
+                                        // Column(
+                                        //   children: [
+                                        //     InkWell(
+                                        //       onTap: (){
+                                        //         PersistentNavBarNavigator.pushNewScreen(
+                                        //           context,
+                                        //           screen: CustomerProfileScreen(userId: getAllUsers.getAllCustomersModel!.users![index].sId!,),
+                                        //           withNavBar: false, // OPTIONAL VALUE. True by default.
+                                        //           pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                        //         );
+                                        //       },
+                                        //       child: Container(
+                                        //         height: 40,
+                                        //         width: 40,
+                                        //         decoration: BoxDecoration(
+                                        //             color: AppColors.buttonColor,
+                                        //             borderRadius: BorderRadius.circular(10)
+                                        //         ),
+                                        //         child: Icon(Icons.edit),
+                                        //       ),
+                                        //     ),
+                                        //
+                                        //     SizedBox(height: 20),
+                                        //     InkWell(
+                                        //       onTap: (){
+                                        //         showDialog<String>(
+                                        //           context: context,
+                                        //           builder: (BuildContext context) => AlertDialog(
+                                        //             title: const Center(child: Text('Are you sure you want to delete user?')),
+                                        //             actions: <Widget>[
+                                        //               Row(
+                                        //                 mainAxisAlignment : MainAxisAlignment.center,
+                                        //                 children: [
+                                        //                   TextButton(
+                                        //                     onPressed: () => Navigator.pop(context, 'Cancel'),
+                                        //                     child: Text('Cancel',
+                                        //                         style: AppUtils.instance.textStyle(
+                                        //                             fontWeight: FontWeight.bold,
+                                        //                             fontSize: 18,
+                                        //                             color: AppColors.green
+                                        //                         )
+                                        //                     ),
+                                        //                   ),
+                                        //                   TextButton(
+                                        //                     onPressed: () {
+                                        //                       Provider.of<DeleteUserProvider>(context,listen: false).deleteCartItem(context, getAllUsers.getAllCustomersModel!.users![index].sId!)
+                                        //                           .then((value) {
+                                        //                         Navigator.pop(context);
+                                        //                         Navigator.pushReplacement(context,
+                                        //                             MaterialPageRoute(builder: (builder) =>
+                                        //                                 AdminBottomNavigation(index: 3,firstName: firstName,lastName: lastName)
+                                        //                             )
+                                        //                         );
+                                        //                       });
+                                        //                     },
+                                        //                     child:  Text('Yes',
+                                        //                         style: AppUtils.instance.textStyle(
+                                        //                             fontWeight: FontWeight.bold,
+                                        //                             fontSize: 18,
+                                        //                             color: AppColors.red
+                                        //                         )
+                                        //                     ),
+                                        //                   ),
+                                        //                 ],
+                                        //               ),
+                                        //
+                                        //             ],
+                                        //           ),
+                                        //         );
+                                        //       },
+                                        //       child: Container(
+                                        //         height: 40,
+                                        //         width: 40,
+                                        //         decoration: BoxDecoration(
+                                        //             color: AppColors.red,
+                                        //             borderRadius: BorderRadius.circular(10)
+                                        //         ),
+                                        //         child: Icon(Icons.delete),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // )
                                       ],
                                     )
                                   ],

@@ -27,6 +27,7 @@ class ProductDetailProvider extends ChangeNotifier {
       await http.get(Uri.parse("${ApiNetwork.PRODUCT_DETAIL_BY_ID}/$productId"));
       print(response);
       if (response.statusCode == 200) {
+        items = 1;
         productDetailModel = ProductDetailModel.fromJson(json.decode(response.body));
         print("products ${productDetailModel}");
 

@@ -48,7 +48,10 @@ class UpdateProfileProvider extends ChangeNotifier {
     try {
       http.Response response =
       await http.put(Uri.parse("${ApiNetwork.USER_URL}/${userId}"),
-          body: updateUserBody);
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(updateUserBody));
       print(response);
       if (response.statusCode == 200) {
         updateProfileModel = UpdateProfileModel.fromJson(json.decode(response.body));

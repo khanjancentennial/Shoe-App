@@ -416,27 +416,6 @@ class _CustomerProductDetailScreenState extends State<CustomerProductDetailScree
                                     Provider.of<AllCartItemsProvider>(context,listen: false).deleteTotalPrice();
 
 
-
-
-                              // AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductName,productDetail.productDetailModel!.product!.productName);
-                              // AppUtils.instance.addPref(PreferenceKey.stringKey, PreferenceKey.prefProductImage,productDetail.productDetailModel!.product!.imagesArray![0]);
-                              // AppUtils.instance.addPref(PreferenceKey.intKey, PreferenceKey.prefQty,productDetail.items);
-                              // AppUtils.instance.addPref(PreferenceKey.doubleKey, PreferenceKey.prefPrice,productDetail.productDetailModel!.product!.price);
-
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => BottomNavigation(firstName: widget.firstName,
-                              //         lastName: widget.lastName,initialIndex: 3,
-                              //         productName: productDetail.productDetailModel!.product!.productName,
-                              //         price: productDetail.productDetailModel!.product!.price,
-                              //         qty: productDetail.items,
-                              //         image: productDetail.productDetailModel!.product!.imagesArray![0],)
-                              //
-                              //     // CustomerHomeScreen(firstName: firstName,lastName: lastName)
-                              //   ),
-                              // );
-
                             },
                             child: Container(
                               decoration: BoxDecoration(

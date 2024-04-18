@@ -52,7 +52,7 @@ class CustomerDeleteOrderByIdProvider extends ChangeNotifier {
 
           PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: BottomNavigation(initialIndex: 2,firstName: firstName,lastName: lastName,userId: customerId),
+            screen: BottomNavigation(initialIndex: 1,firstName: firstName,lastName: lastName,userId: customerId),
             withNavBar: false, // OPTIONAL VALUE. True by default.
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );

@@ -1,13 +1,13 @@
 class TopValuesModel {
   bool? success;
   List<Orders>? orders;
-  int? mondayRevenue;
+  double? mondayRevenue;
   double? tuesdayRevenue;
   double? wednesdayRevenue;
-  int? thursdayRevenue;
+  double? thursdayRevenue;
   double? fridayRevenue;
-  int? saturdayRevenue;
-  int? sundayRevenue;
+  double? saturdayRevenue;
+  double? sundayRevenue;
   String? message;
 
   TopValuesModel(
@@ -30,13 +30,13 @@ class TopValuesModel {
         orders!.add(new Orders.fromJson(v));
       });
     }
-    mondayRevenue = json['mondayRevenue'];
-    tuesdayRevenue = json['tuesdayRevenue'];
-    wednesdayRevenue = json['wednesdayRevenue'];
-    thursdayRevenue = json['thursdayRevenue'];
-    fridayRevenue = json['fridayRevenue'];
-    saturdayRevenue = json['saturdayRevenue'];
-    sundayRevenue = json['sundayRevenue'];
+    mondayRevenue = json['mondayRevenue'].toDouble();
+    tuesdayRevenue = json['tuesdayRevenue'].toDouble();
+    wednesdayRevenue = json['wednesdayRevenue'].toDouble();
+    thursdayRevenue = json['thursdayRevenue'].toDouble();
+    fridayRevenue = json['fridayRevenue'].toDouble();
+    saturdayRevenue = json['saturdayRevenue'].toDouble();
+    sundayRevenue = json['sundayRevenue'].toDouble();
     message = json['message'];
   }
 
@@ -66,7 +66,7 @@ class Orders {
   double? totalPrice;
   String? status;
   String? creationDate;
-  Null? updateDate;
+  String? updateDate;
   int? iV;
 
   Orders(
